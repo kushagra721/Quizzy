@@ -193,28 +193,6 @@ fun LoginScreen(
             }
 
 
-            /*OutlinedTextField(
-                value = state.username,
-                onValueChange = viewModel::onUsernameChange,
-                label = { Text("Username") }
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            OutlinedTextField(
-                value = state.password,
-                onValueChange = viewModel::onPasswordChange,
-                label = { Text("Password") }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = { viewModel.onLoginClick(onLoginSuccess) },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Login")
-            }*/
 
             state.error?.let {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -231,6 +209,36 @@ fun LoginScreen(
 
             BottomLoginCard(state, viewModel, onLoginSuccess)
 
+        }
+
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.6f))
+                    .align(Alignment.Center),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        strokeWidth = 2.dp,
+                        modifier = Modifier.size(22.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Text(
+                        text = "Signing you in…",
+                        color = Color.White,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
         }
 
 
@@ -309,7 +317,14 @@ fun BottomLoginCard(
             contentAlignment = Alignment.BottomCenter
         ) {
             Button(
-                onClick = { viewModel.onLoginClick(onLoginSuccess) },
+                onClick = { viewModel.onLoginClick(
+                    schoolId = state.username,
+                    studentId = state.password
+                ) {
+                    onLoginSuccess()
+                }
+
+                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),

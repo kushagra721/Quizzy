@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -71,8 +73,26 @@ dependencies {
     // OkHttp (network layer)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
-    // Logging (optional but recommended)
+    // Logging
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // firebase
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+
+    implementation (platform("com.google.firebase:firebase-bom:30.3.2"))
+    implementation ("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.firebase:firebase-storage-ktx")
+    implementation ("com.google.firebase:firebase-auth-ktx")
+
+    implementation("com.firebaseui:firebase-ui-auth:8.0.1") {
+        exclude(group = "com.google.firebase", module = "firebase-analytics")
+    }
+    implementation("com.firebaseui:firebase-ui-database:8.0.1") {
+        exclude(group = "com.google.firebase", module = "firebase-analytics")
+    }
+
+    implementation ("com.google.firebase:firebase-messaging:23.0.0")
 
     
     testImplementation(libs.junit)
